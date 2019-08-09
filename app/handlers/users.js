@@ -9,6 +9,7 @@ function serialize(user) {
     id: user.id,
     email: user.email,
     name: user.name,
+    username: user.username,
     userType: user.userType,
     role: user.role,
     createdAt: user.createdAt,
@@ -33,22 +34,22 @@ module.exports = {
   show: handlers.show("User"),
   list: handlers.list("User"),
   update: handlers.update("User", async (ctx, user, args) => {
-    let {role, name, email, password, passwordConfirm} = args
+    let {role, name, email, username, password, passwordConfirm} = args
     if(!checkAccess(ctx, "updateRole")) {
       role = ctx.state.user.role
     }
-    user.setAttributes(_.omitBy({role, name, email, password, passwordConfirm}, _.isUndefined))
+    user.setAttributes(_.omitBy({role, name, username, email, password, passwordConfirm}, _.isUndefined))
     if(user.changed("password")) await user.resetTokens("restore")
     await user.save()
     return user
   }),
   create: handlers.create("User", async (ctx, user, args) => {
-    let {role, name, email, password, passwordConfirm} = args
+    let {role, name, email, username, password, passwordConfirm} = args
     const userType = ctx.state.user.userType
     if(!checkAccess(ctx, "updateRole")) {
       role = ctx.state.user.role
     }
-    user.setAttributes(_.omitBy({userType, role, name, email, password, passwordConfirm}, _.isUndefined))
+    user.setAttributes(_.omitBy({userType, role, name, username, email, password, passwordConfirm}, _.isUndefined))
     await user.save()
     await ctx.services.mailer.sendUserRegisterEmail(user, await user.createLoginToken())
     return user
