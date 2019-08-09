@@ -8,7 +8,8 @@ module.exports = {
         id:    1,
         userType: "admin",
         role: "admin",
-        email: "mdc-cmi@rebbix.com",
+        name: "Root",
+        email: "root@rebbix.com",
         encryptedPassword: pwd,
         createdAt: new Date(),
         updatedAt: new Date()
