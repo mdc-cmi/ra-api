@@ -22,6 +22,10 @@ class MailerService {
   }
 
   async getTemplate(name, locale, params) {
+    return ({
+      title: name,
+      body: "Text"
+    })
     // require template
     // const {EmailTemplate} = this.models
     // let template = await EmailTemplate.findOne({where: {name, locale}})
