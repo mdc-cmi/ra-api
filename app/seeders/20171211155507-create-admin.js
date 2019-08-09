@@ -9,6 +9,7 @@ module.exports = {
         userType: "admin",
         role: "admin",
         name: "Root",
+        username: "admin",
         email: "root@rebbix.com",
         encryptedPassword: pwd,
         createdAt: new Date(),

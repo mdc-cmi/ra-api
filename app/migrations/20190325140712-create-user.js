@@ -15,6 +15,10 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
+      username: {
+        type: Sequelize.STRING,
+        unique: true
+      },
       userType: {
         type: Sequelize.STRING
       },
@@ -23,7 +27,7 @@ module.exports = {
       },
       encryptedPassword: {
         type: Sequelize.STRING
-      },      
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

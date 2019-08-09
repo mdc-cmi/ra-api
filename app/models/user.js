@@ -18,11 +18,12 @@ module.exports = (sequelize, DataTypes) => {
       get: function() { return "pt-BR" }
     },
     profile: {
-      type: new DataTypes.VIRTUAL(DataTypes.STRING, ["id", "name", "email", "userType", "role"]),
+      type: new DataTypes.VIRTUAL(DataTypes.STRING, ["id", "name", "username", "email", "userType", "role"]),
       get: function() {
         return ({
           id: this.id,
           name: this.name,
+          username: this.username,
           email: this.email,
           userType: this.userType,
           role: this.role,
