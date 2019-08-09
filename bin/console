@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
+
+NODE_PATH=".:${NODE_PATH}" node --experimental-repl-await -i -e '
+const config      = require("config")
+const Application = require("index")
+const application = new Application(config)
+application.initDependencies(config)
+'

@@ -1,0 +1,46 @@
+{
+  "name": "ra-api",
+  "description": "-",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdc-cmi/ra-api.git"
+  },
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/mdc-cmi/sasi-api/issues"
+  },
+  "scripts": {
+    "start": "node --optimize_for_size --max_old_space_size=460 --gc_interval=100 ./run.js",
+    "db-migrate": "bin/sq db:migrate"
+  },
+  "homepage": "https://github.com/mdc-cmi/sasi-api#readme",
+  "dependencies": {
+    "@google-cloud/storage": "^3.0.2",
+    "@google/maps": "^0.5.5",
+    "@iin-mdc/koa-utils": "^1.2.9",
+    "@koa/cors": "^2.2.1",
+    "bcrypt": "^3.0.5",
+    "bull": "^3.10.0",
+    "busboy": "^0.3.1",
+    "co-busboy": "^1.4.0",
+    "dead-simple-logger": "^1.0.0",
+    "fs-extra": "^7.0.1",
+    "ioredis": "^3.2.2",
+    "koa": "^2.5.1",
+    "koa-bodyparser": "^4.2.0",
+    "koa-convert": "^1.2.0",
+    "koa-router": "^7.4.0",
+    "lodash": "^4.17.14",
+    "mysql2": "^1.5.3",
+    "nodemailer": "^5.1.1",
+    "nodemailer-mailgun-transport": "^1.4.0",
+    "request": "^2.85.0",
+    "sequelize": "^5.10.1",
+    "sequelize-cli": "^5.5.0",
+    "sharp": "^0.22.1",
+    "tmp-promise": "^2.0.1",
+    "uuid": "^3.2.1"
+  }
+}

@@ -1,0 +1,59 @@
+"use strict"
+const bcrypt    = require("@iin-mdc/koa-utils/lib/bcrypt-setup")
+module.exports = (sequelize, DataTypes) => {
+  const User = sequelize.define("User", {
+    userType: DataTypes.STRING, //mdc/distributor/client
+    role: DataTypes.STRING,     //admin/admin/client manager/site manager
+    passwordConfirm:   DataTypes.VIRTUAL,
+    password:          DataTypes.VIRTUAL,
+    encryptedPassword: DataTypes.STRING,
+    username: { type: DataTypes.STRING, unique: true },
+    email: { type: DataTypes.STRING },
+    name: DataTypes.STRING,
+    locale: {
+      type: new DataTypes.VIRTUAL(DataTypes.STRING),
+      get: function() { return "pt-BR" }
+    },
+    profile: {
+      type: new DataTypes.VIRTUAL(DataTypes.STRING, ["id", "name", "email", "userType", "role"]),
+      get: function() {
+        return ({
+          id: this.id,
+          name: this.name,
+          email: this.email,
+          userType: this.userType,
+          role: this.role,
+        })
+      }
+    }
+  }, {
+    validate: {
+      passwordConfirmValidate: function() {
+        if(this.password && this.passwordConfirm != this.password) {
+          throw new Error("password confirmation should match password")
+        }
+      }
+    }
+  })
+  User.prototype.isValidPassword = async function (password) {
+    try {
+      return await bcrypt.compare(password, this.encryptedPassword)
+    } catch (e) {
+      return false
+    }
+  }
+  User.beforeSave(async (self) => {
+    if(self.password) {
+      self.encryptedPassword = await bcrypt.hash(self.password, 10)
+    }
+  })
+  User.prototype.getPermissions = async function () {
+    return [`${this.userType}:${this.role}`]
+  }
+  User.associate = function(models) {
+    User.belongsTo(models.Client)
+    User.belongsTo(models.Site)
+    User.belongsTo(models.MonitoringProvider)
+  }
+  return User
+}

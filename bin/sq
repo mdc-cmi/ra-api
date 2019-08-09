@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
+
+NODE_PATH=".:..:${NODE_PATH}" node_modules/.bin/sequelize --url "${DATABASE_URL}" --models-path "app/models" --seeders-path "app/seeders" --migrations-path "app/migrations" "$@"

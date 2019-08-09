@@ -1,0 +1,10 @@
+.git*
+log
+ansible
+.dockerignore
+docker-compose.yml
+Dockerfile
+k8s
+secrets
+data
+Jenkinsfile

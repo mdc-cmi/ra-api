@@ -1,0 +1,3 @@
+rules:
+  semi: off
+  no-unused-wars: off

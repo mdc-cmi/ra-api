@@ -1,0 +1,49 @@
+version: '3'
+services:
+  app:
+    image: ra-api:latest
+    command: "nodemon run.js"
+    volumes:
+      - .:/build
+    ports:
+      - "3030:3000"
+    depends_on:
+      - mysql
+      - redis
+    environment: &APP_ENV
+      DATABASE_URL: mysql://api-user:psswd@mysql/api-dev
+      LOG_LEVEL: debug
+      NODE_ENV: development
+      REDIS_URL: redis://redis
+      PUBLIC_URI: "http://localhost:3000"
+      MAILGUN_API_KEY:
+      MAILGUN_DOMAIN: example.com
+      EMAILS_DEFAULT_FROM: noreply@example.com
+      GCLOUD_PROJECT_ID: ""
+      GCLOUD_STORAGE_BUCKET: "uploads.example.com"
+  jobs:
+    image: ra-api:latest
+    command: nodemon jobs.js
+    volumes:
+      - .:/build
+    depends_on:
+      - mysql
+      - redis
+    environment:
+      <<: *APP_ENV
+  redis:
+    image: redis:5.0-alpine
+    ports:
+      - "6379"
+  mysql:
+    #image: gcr.io/cloudsql-docker/gce-proxy:1.11
+    image: mysql/mysql-server:5.7
+    ports:
+      - "33030:3306"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/my.cnf
+    environment:
+      MYSQL_DATABASE: api-dev
+      MYSQL_USER: api-user
+      MYSQL_PASSWORD: psswd

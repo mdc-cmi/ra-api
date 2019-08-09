@@ -1,0 +1,25 @@
+root: true
+env:
+  es6: on
+  node: on
+parserOptions:
+  ecmaVersion: 2019
+extends: 'eslint:recommended'
+rules:
+  strict:
+    - error
+  indent: off
+  linebreak-style:
+    - error
+    - unix
+  quotes:
+    - warn
+    - double
+  semi:
+    - warn
+    - never
+overrides:
+  - files:
+    - "*.js"
+    rules:
+      require-atomic-updates: 'off'
