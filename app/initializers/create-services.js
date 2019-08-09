@@ -27,6 +27,6 @@ module.exports = async (application, redisInitializer) => {
   }
   async function start() {
     return await Promise.all(
-      Object.keys(services).map(service => service.start && await service.start()))
+      Object.keys(services).map(async service => service.start && await service.start()))
   }
 }

@@ -11,9 +11,6 @@ const createKoaApp         = require("app/initializers/create-koa-app")
 const createHttpServer     = require("app/initializers/create-http-server")
 const createBgProcessing   = require("app/initializers/create-bg-processing")
 const createRedisClient    = require("app/initializers/create-redis-client")
-//const createGcloudStorage  = require("app/initializers/create-gcloud-storage")
-//const createMapClient      = require("app/initializers/create-map-client")
-//const createFirebaseAdmin  = require("app/initializers/create-firebase-admin")
 
 class Application {
   constructor(config) {
@@ -27,9 +24,6 @@ class Application {
     this.models       = await createModels(this)
     this.redisClient  = await createRedisClient(this)
     this.jobs         = await createBgProcessing(this, createRedisClient)
-    // this.googleStorage= await createGcloudStorage(this)
-    // this.googleMaps   = await createMapClient(this)
-    // this.firebaseAdmin= await createFirebaseAdmin(this)
     this.services     = await createServices(this, createRedisClient)
     this.ctxExtender  = await createCtxExtender(this)
     this.healthz      = await createHealthzMonitor(this)

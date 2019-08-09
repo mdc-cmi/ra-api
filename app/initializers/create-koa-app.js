@@ -41,8 +41,8 @@ module.exports = async (application) => {
 
   app.use(bodyParser())
   app.use(ctxExtender)
-  app.use(koaRouter.routes())
-  app.use(koaRouter.allowedMethods())
+  // app.use(koaRouter.routes())
+  // app.use(koaRouter.allowedMethods())
 
   return app
 }

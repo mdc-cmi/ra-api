@@ -32,7 +32,7 @@ module.exports = {
   },
   gcloudReporting: {
     projectId:              process.env.GCLOUD_PROJECT_ID,
-    ignoreEnvironmentCheck: process.env.GCLOUD_IGNORE_ENV_CHECK === "yes",
+    router:                "always",
     credentials:            process.env.GCLOUD_CREDENTIALS && JSON.parse(process.env.GCLOUD_CREDENTIALS)
   },
   firebase: {

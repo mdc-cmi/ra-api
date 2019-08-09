@@ -1,5 +1,8 @@
 "use strict"
-const bcrypt    = require("@iin-mdc/koa-utils/lib/bcrypt-setup")
+const bcrypt      = require("@iin-mdc/koa-utils/lib/bcrypt-setup")
+const permissions = require("app/lib/permissions")
+const {get}       = require("lodash")
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define("User", {
     userType: DataTypes.STRING, //mdc/distributor/client
@@ -48,12 +51,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   })
   User.prototype.getPermissions = async function () {
-    return [`${this.userType}:${this.role}`]
+    return get(permissions, `${this.userType}.${this.role}`, [])
   }
-  User.associate = function(models) {
-    User.belongsTo(models.Client)
-    User.belongsTo(models.Site)
-    User.belongsTo(models.MonitoringProvider)
-  }
+  // User.associate = function(models) {
+  //
+  // }
   return User
 }

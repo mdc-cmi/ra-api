@@ -1,9 +1,9 @@
 "use strict"
-
-const Router   = require("koa-router")
+const Router        = require("koa-router")
 const handlers = {
    users:         require("app/handlers/users"),
    auth:          require("app/handlers/authentication"),
+   errors:        require("app/handlers/http-errors"),
 }
 
 const rest = {
@@ -26,16 +26,15 @@ const rest = {
 
 module.exports = async () => {
   const router = Router()
-
   router.use(handlers.errors)
-    extend("/api/management", (router) => {
+
+  extend("/api/management", router => {
     router.post("/authenticate", handlers.auth.login)
     router.post("/restore-password", handlers.users.forgotPassword)
 
     router.use(handlers.auth.token)
     router.post("/users/:id/authenticate", handlers.users.loginAs)
     rest.for("/users", router, handlers.users)
-
     return router
   }, router)
 
