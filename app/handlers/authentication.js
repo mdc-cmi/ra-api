@@ -21,8 +21,10 @@ module.exports = {
     const permissions = await user.getPermissions()
     ctx.body = {
       token: token,
-      profile: user.profile,
-      permissions: permissions
+      profile: {
+        ...user.profile,
+        permissions
+      }      
     }
   }
 }
